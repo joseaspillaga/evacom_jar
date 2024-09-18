@@ -22,7 +22,7 @@ public class SedAepcCorreosApplication {
 	static void enviar() {
 		try {
 			 INotificaciones service = new NoficacionesImpl(); 
-			 service.notificacionConocimiento("Jose", "jaaspillaga@indracompany.com","2025");
+			 service.notificacionConocimiento("Felix2", "fsvargas@indracompany.com","2025");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

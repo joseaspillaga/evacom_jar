@@ -22,6 +22,7 @@ import org.springframework.stereotype.Repository;
 
 import oracle.jdbc.OracleTypes;
 import pe.com.sedapal.evaluacion.dao.IUtilDAO;
+import pe.com.sedapal.evaluacion.model.Calendario;
 import pe.com.sedapal.evaluacion.model.Constantes;
 import pe.com.sedapal.evaluacion.model.FormatoHTML;
 import pe.com.sedapal.evaluacion.util.DBConstants;
@@ -129,4 +130,29 @@ public class UtilDaoImpl implements IUtilDAO {
 	        item.setFormatoHtml(resultBlob);
 	        return item;
 	    }
+	  
+	  @Override
+		public Calendario calendario(String codigoCalendario) throws SQLException {		
+			Calendario calendario = new Calendario();
+			this.jdbcCall = new SimpleJdbcCall(this.jdbcTemplate)
+					.withSchemaName(DBConstants.SCHEMA_NAME)
+					.withCatalogName(DBConstants.PACKAGE_SISTEMA).withProcedureName(DBConstants.PROCEDURE_OBTENER_CALENDARIO)
+					.withoutProcedureColumnMetaDataAccess().declareParameters(		
+							new SqlParameter("p_idCalendario", Types.VARCHAR),
+							new SqlOutParameter("o_nombre", Types.VARCHAR),
+							new SqlOutParameter("o_mensaje", Types.VARCHAR),
+							new SqlOutParameter("o_retorno", Types.NUMERIC));
+			
+			Map<String, Object> inParams = new HashMap<>();
+			inParams.put("p_idCalendario", codigoCalendario);
+			
+			jdbcCall.compile();
+			Map<String, Object> result = jdbcCall.execute(inParams);
+			String nombre =  result.get("o_nombre").toString();
+			 
+			calendario.setVCodigo(codigoCalendario);
+			calendario.setVNombre(nombre);
+			return calendario;
+		}
+	  
 }
