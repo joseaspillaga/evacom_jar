@@ -53,12 +53,26 @@ public class PidServiceImpl implements IPidService{
 		
 		for (Pid evaluado : evaluados) {
 			
-			String accion = evaluado.isVeredictoRegistro() ? "aprobado" : "rechazado";
-			String tipoRegistro = "registro";
-
+			String accion = "";
+			String tipoRegistro = "";
+			String observacion = "";
+			
+			if (evaluado.getId().equals(Long.valueOf(0))) {
+				accion = "a&uacute;n no se ha realizado";
+				tipoRegistro = "registro";
+				
+			}else {
+				accion = evaluado.isVeredictoRegistro() ? "se ha aprobado" : "se ha rechazado";
+				tipoRegistro = "registro";
+				
+				if(evaluado.getComentarioRegistro()!= null && !evaluado.getComentarioRegistro().trim().isEmpty()) {
+					observacion = "Observaci&oacute;n: " + evaluado.getComentarioRegistro();
+				}
+			}
+			
 			if(evaluado.getCorreo()!= null && !evaluado.getCorreo().trim().isEmpty() ) {
 				notificacionService.notificacionPid(evaluado.getApellidosNombres(), 
-						"fsvargas@indracompany.com", calendario.getVNombre(),accion, tipoRegistro );
+						"fsvargas@indracompany.com", calendario.getVNombre(),accion, tipoRegistro,observacion );
 			}
 		}
 		
@@ -72,12 +86,18 @@ public class PidServiceImpl implements IPidService{
 		
 		for (Pid evaluado : evaluados) {
 			
-			String accion = evaluado.isVeredictoCumplimiento()? "aprobado" : "rechazado";
+			String accion = evaluado.isVeredictoCumplimiento()? "se ha aprobado" : "se ha rechazado";
 			String tipoRegistro = "registro cumplimiento";
+			String observacion = "";
 
+			if(evaluado.getComentarioCumplimiento()!= null && !evaluado.getComentarioCumplimiento().trim().isEmpty()) {
+				observacion = "Observaci&oacute;n: " + evaluado.getComentarioCumplimiento();
+			}
+			
+			
 			if(evaluado.getCorreo()!= null && !evaluado.getCorreo().trim().isEmpty() ) {
 				notificacionService.notificacionPid(evaluado.getApellidosNombres(), 
-						"fsvargas@indracompany.com", calendario.getVNombre(),accion, tipoRegistro );
+						"fsvargas@indracompany.com", calendario.getVNombre(),accion, tipoRegistro,observacion );
 			}
 		}
 		
@@ -91,12 +111,13 @@ public class PidServiceImpl implements IPidService{
 		
 		for (Pid evaluador : evaluadores) {
 			
-			String accion = "realizado";
+			String accion = "se ha realizado";
 			String tipoRegistro = "registro";
-
+			String observacion = "";
+			
 			if(evaluador.getCorreo()!= null && !evaluador.getCorreo().trim().isEmpty() ) {
 				notificacionService.notificacionPid(evaluador.getApellidosNombres(), 
-						"fsvargas@indracompany.com", calendario.getVNombre(),accion, tipoRegistro );
+						"fsvargas@indracompany.com", calendario.getVNombre(),accion, tipoRegistro,observacion );
 			}
 		}
 		
@@ -110,12 +131,13 @@ public class PidServiceImpl implements IPidService{
 		
 		for (Pid evaluador : evaluadores) {
 			
-			String accion = "realizado";
+			String accion = "se ha realizado";
 			String tipoRegistro = "registro cumplimiento";
+			String observacion = "";
 
 			if(evaluador.getCorreo()!= null && !evaluador.getCorreo().trim().isEmpty() ) {
 				notificacionService.notificacionPid(evaluador.getApellidosNombres(), 
-						"fsvargas@indracompany.com", calendario.getVNombre(),accion, tipoRegistro );
+						"fsvargas@indracompany.com", calendario.getVNombre(),accion, tipoRegistro,observacion );
 			}
 		}
 		

@@ -58,6 +58,7 @@ public class PidDaoImpl implements IPidDAO{
 		for (Map<String, Object> map : rows) {
 			Pid pid = new Pid();
 			
+			pid.setId(((Number) map.get("NCODIGO")).longValue());
 			pid.setCodigoFicha(map.get("VFICHA").toString());
 			pid.setApellidosNombres(map.get("VNOMBRECOMPLETO").toString());
 			pid.setCorreo(map.get("VCORREO").toString());
@@ -67,6 +68,9 @@ public class PidDaoImpl implements IPidDAO{
 			
 			pid.setVeredictoRegistro(nEstadoRegistro > 0);
 			pid.setVeredictoCumplimiento(nEstadoCumplimiento > 0);
+			
+			pid.setComentarioRegistro(map.get("VCOMENTARIO_REGISTRO").toString());
+			pid.setComentarioCumplimiento(map.get("VCOMENTARIO_CUMPLIMIENTO").toString());
 			
 			lista.add(pid);
 		}
@@ -106,6 +110,9 @@ public class PidDaoImpl implements IPidDAO{
 			
 			pid.setVeredictoRegistro(nEstadoRegistro > 0);
 			pid.setVeredictoCumplimiento(nEstadoCumplimiento > 0);
+			
+			pid.setComentarioRegistro(map.get("VCOMENTARIO_REGISTRO").toString());
+			pid.setComentarioCumplimiento(map.get("VCOMENTARIO_CUMPLIMIENTO").toString());
 			
 			lista.add(pid);
 		}

@@ -17,6 +17,6 @@ public interface INotificaciones {
 	Boolean notificacionRetroalimentacion(String nombre, String correo, String tipoPersona, String calendario)
 			throws SQLException;
 
-	Boolean notificacionPid(String nombre, String correo, String calendario, String accion, String tipoRegistro)
+	Boolean notificacionPid(String nombre, String correo, String calendario, String accion, String tipoRegistro, String observacion)
 			throws SQLException;	
 }

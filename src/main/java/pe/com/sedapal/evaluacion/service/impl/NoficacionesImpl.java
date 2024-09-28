@@ -295,7 +295,7 @@ public class NoficacionesImpl implements INotificaciones{
 	      }
 	     cuerpoCorreo = this.updateBodyRetroalimentacion(plantillaString, nombre, calendario, Util.getConstante(constantes, DBConstants.CONSTANTES_CORREO_URL).getValor(), tipoPersona);
 	     correoObj.setMensaje(cuerpoCorreo);
-	     correoObj.setAsunto(Util.getConstante(constantes, DBConstants.CONSTANTES_CORREO_ASUNTO_PID).getValor());
+	     correoObj.setAsunto(Util.getConstante(constantes, DBConstants.CONSTANTES_CORREO_ASUNTO_RETROALIMENTACION).getValor());
 	     
 	     List<String> destinatarios = new ArrayList<String>();
 	     destinatarios.add(correo);
@@ -325,7 +325,7 @@ public class NoficacionesImpl implements INotificaciones{
 	
 	
 	@Override
-	public Boolean notificacionPid(String nombre, String correo, String calendario, String accion, String tipoRegistro) throws SQLException {
+	public Boolean notificacionPid(String nombre, String correo, String calendario, String accion, String tipoRegistro,String observacion) throws SQLException {
 		String cuerpoCorreo = "";
 		 Correo correoObj = new Correo();
 	     CorreoCabecera correoCabecera = new CorreoCabecera();
@@ -343,7 +343,7 @@ public class NoficacionesImpl implements INotificaciones{
 	            Blob plantillaBlob = formato.getFormatoHtml();
 	            plantillaString = new String(plantillaBlob.getBytes(1l, (int) plantillaBlob.length()));	         
 	      }
-	     cuerpoCorreo = this.updateBodyPid(plantillaString, nombre, calendario, Util.getConstante(constantes, DBConstants.CONSTANTES_CORREO_URL).getValor(), accion, tipoRegistro);
+	     cuerpoCorreo = this.updateBodyPid(plantillaString, nombre, calendario, Util.getConstante(constantes, DBConstants.CONSTANTES_CORREO_URL).getValor(), accion, tipoRegistro,observacion);
 	     correoObj.setMensaje(cuerpoCorreo);
 	     correoObj.setAsunto(Util.getConstante(constantes, DBConstants.CONSTANTES_CORREO_ASUNTO_PID).getValor());
 	     
@@ -362,12 +362,13 @@ public class NoficacionesImpl implements INotificaciones{
 		return true;
 	}
 	
-	private String updateBodyPid(String cuerpoCorreo, String nombre, String periodo, String enlace, String accion, String tipoRegistro) throws SQLException {
+	private String updateBodyPid(String cuerpoCorreo, String nombre, String periodo, String enlace, String accion, String tipoRegistro,String observacion) throws SQLException {
 	 
         cuerpoCorreo = cuerpoCorreo.replaceAll("%NOM_PERSONA%", nombre);
         cuerpoCorreo = cuerpoCorreo.replaceAll("%ACCION%", accion);
         cuerpoCorreo = cuerpoCorreo.replaceAll("%TIPO_REGISTRO%", tipoRegistro);
         cuerpoCorreo = cuerpoCorreo.replaceAll("%NOM_PERIODO%", periodo);
+        cuerpoCorreo = cuerpoCorreo.replaceAll("%OBSERVACION%", observacion);
         cuerpoCorreo = cuerpoCorreo.replaceAll("%SIS_LINK%", enlace);
         return cuerpoCorreo;
     }
