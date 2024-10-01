@@ -43,8 +43,10 @@ public class RetroalimentacionServiceImpl implements IRetroalimentacionService{
 		
 		for (Trabajador evaluado : evaluados) {
 			if(evaluado.getCorreo()!= null && !evaluado.getCorreo().trim().isEmpty() ) {
+				String tipoPersona = "su evaluador";
+				String accion = "ha realizado";
 				notificacionService.notificacionRetroalimentacion(
-						evaluado.getApellidosNombres(), "fsvargas@indracompany.com", "evaluador", calendario.getVNombre());
+						evaluado.getApellidosNombres(), "fsvargas@indracompany.com", tipoPersona,accion, calendario.getVNombre());
 			}
 		}
 		
@@ -58,8 +60,11 @@ public class RetroalimentacionServiceImpl implements IRetroalimentacionService{
 		
 		for (Trabajador evaluador : evaluadores) {
 			if(evaluador.getCorreo()!= null && !evaluador.getCorreo().trim().isEmpty() ) {
+				String tipoPersona = "su evaluado";
+				String accion = "ha realizado";
+				
 				notificacionService.notificacionRetroalimentacion(
-						evaluador.getApellidosNombres(), "fsvargas@indracompany.com", "evaluado", calendario.getVNombre());
+						evaluador.getApellidosNombres(), "fsvargas@indracompany.com", tipoPersona, accion, calendario.getVNombre());
 			}
 		}
 		

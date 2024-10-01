@@ -274,7 +274,7 @@ public class NoficacionesImpl implements INotificaciones{
 	
 	
 	@Override
-	public Boolean notificacionRetroalimentacion(String nombre, String correo, String tipoPersona, String calendario) throws SQLException {
+	public Boolean notificacionRetroalimentacion(String nombre, String correo, String tipoPersona, String accion, String calendario) throws SQLException {
 		
 		String cuerpoCorreo = "";
 		 Correo correoObj = new Correo();
@@ -293,7 +293,7 @@ public class NoficacionesImpl implements INotificaciones{
 	            Blob plantillaBlob = formato.getFormatoHtml();
 	            plantillaString = new String(plantillaBlob.getBytes(1l, (int) plantillaBlob.length()));	         
 	      }
-	     cuerpoCorreo = this.updateBodyRetroalimentacion(plantillaString, nombre, calendario, Util.getConstante(constantes, DBConstants.CONSTANTES_CORREO_URL).getValor(), tipoPersona);
+	     cuerpoCorreo = this.updateBodyRetroalimentacion(plantillaString, nombre, calendario, Util.getConstante(constantes, DBConstants.CONSTANTES_CORREO_URL).getValor(), tipoPersona, accion);
 	     correoObj.setMensaje(cuerpoCorreo);
 	     correoObj.setAsunto(Util.getConstante(constantes, DBConstants.CONSTANTES_CORREO_ASUNTO_RETROALIMENTACION).getValor());
 	     
@@ -314,10 +314,11 @@ public class NoficacionesImpl implements INotificaciones{
 		
 	}
 	
-	private String updateBodyRetroalimentacion(String cuerpoCorreo, String nombre, String periodo, String enlace, String tipoPersona) throws SQLException {
+	private String updateBodyRetroalimentacion(String cuerpoCorreo, String nombre, String periodo, String enlace, String tipoPersona, String accion) throws SQLException {
 		 
         cuerpoCorreo = cuerpoCorreo.replaceAll("%NOM_PERSONA%", nombre);
         cuerpoCorreo = cuerpoCorreo.replaceAll("%TIPO_PERSONA%", tipoPersona);
+        cuerpoCorreo = cuerpoCorreo.replaceAll("%ACCION%", accion);
         cuerpoCorreo = cuerpoCorreo.replaceAll("%NOM_PERIODO%", periodo);
         cuerpoCorreo = cuerpoCorreo.replaceAll("%SIS_LINK%", enlace);
         return cuerpoCorreo;
